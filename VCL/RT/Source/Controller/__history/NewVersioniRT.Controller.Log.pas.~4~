@@ -1,0 +1,85 @@
+unit NewVersioniRT.Controller.Log;
+
+interface
+uses
+  NewVersioniRT.Controller.Interfaces,
+  NewVersioniRT.Model.Interfaces,
+  System.classes,
+  System.SysUtils;
+
+type
+  TNewVersioniRTControllerLog = class(TInterfacedObject, INewVersioniRTControllerLog)
+  private
+    FEntity : INewVersioniRTControllerLogEntity;
+    FErrors : TStringList;
+    FModel : INewVersioniRTModelLog;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Log(const Avalue: INewVersioniRTControllerLogEntity); overload;
+    function Log: INewVersioniRTControllerLogEntity; overload;
+    procedure WriteLog(const ALogType : string ; const ALogInfo: string);
+    function GetLog : string;
+    class function New : INewVersioniRTControllerLog;
+  end;
+
+implementation
+
+uses
+  NewVersioniRT.Model.Factory,
+  NewVersioniRT.Controller.Factory;
+
+constructor TNewVersioniRTControllerLog.Create;
+var
+  LControllerFactory : INewVersioniRTControllerFactory;
+  LModelFactory : INewVersioniRTModelFactory;
+begin
+  LControllerFactory :=  TNewVersioniRTControllerFactory.New;
+  LModelFactory :=  TNewVersioniRTModelFactory.New;
+  FEntity := LControllerFactory.EntityLog;
+  FModel := LModelFactory.Log;
+  FModel.log(FEntity);
+  FErrors := TStringList.create;
+end;
+
+procedure TNewVersioniRTControllerLog.Log(
+  const Avalue: INewVersioniRTControllerLogEntity);
+begin
+  FEntity := Avalue;
+end;
+
+function TNewVersioniRTControllerLog.Log: INewVersioniRTControllerLogEntity;
+begin
+  Result := FEntity;
+end;
+
+class function TNewVersioniRTControllerLog.New: INewVersioniRTControllerLog;
+begin
+  Result := Self.Create;
+end;
+
+procedure TNewVersioniRTControllerLog.WriteLog(const ALogType, ALogInfo : string);
+begin
+  FModel.WriteLog(ALogType, ALogInfo);
+end;
+
+destructor TNewVersioniRTControllerLog.Destroy;
+begin
+  if Assigned(FErrors) then
+  FErrors.free;
+  inherited;
+end;
+
+function TNewVersioniRTControllerLog.GetLog: string;
+begin
+  try
+  Result := FModel.GetLog;
+  except
+    on e: exception do
+      begin
+        Result := '';
+        FErrors.add(e.message);
+      end;
+  end;
+end;
+end.

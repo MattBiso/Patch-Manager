@@ -1,0 +1,24 @@
+unit NewVersioniRT.DataTypes.Interfaces;
+
+interface
+
+uses
+  spring.Collections;
+
+
+type
+
+  INewVersioniRTDataTypes = interface
+  ['{A0D1A397-0175-47A8-84DA-3530560E03A4}']
+    function GetDict :  IDictionary<string,integer>;
+
+  end;
+
+  INewVersioniRTDataTypesFactory = interface
+  ['{2690FC24-B678-43DF-A1AB-6B5FBC0A4591}']
+
+  end;
+
+implementation
+
+end.

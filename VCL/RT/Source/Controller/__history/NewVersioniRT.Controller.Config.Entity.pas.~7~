@@ -1,0 +1,172 @@
+unit NewVersioniRT.Controller.Config.Entity;
+
+interface
+
+uses
+  NewVersioniRT.Controller.Interfaces;
+
+type
+{$SCOPEDENUMS ON}
+  TState = (None, Selected, Deleted, Modified);
+{$SCOPEDENUMS OFF}
+
+
+type
+  TNewVersioniRTControllerConfigPath = class(TInterfacedObject, INewVersioniRTControllerConfigPath)
+  strict private
+    FJsonDir : string;
+    FLogDir : string;
+  private
+    constructor Create;
+  public
+    function JsonDir : string; overload;
+    procedure JsonDir(const AValue : string); overload;
+    function LogDir : string; overload;
+    procedure LogDir(const Avalue : string); overload;
+  end;
+
+
+
+type
+  TNewVersioniRTControllerConfigDB = class(TInterfacedObject , INewVersioniRTControllerConfigDb)
+   strict private
+    FServer : string;
+    FDataBase : string;
+    FNomeUtente : string;
+    FPassword : string;
+  private
+    constructor Create;
+  public
+    function Server : string; overload;
+    procedure Server(const AValue : string); overload;
+    function DataBase : string; overload;
+    procedure DataBase(const AValue : string); overload;
+    function NomeUtente : string; overload;
+    procedure NomeUtente(const AValue : string); overload;
+    function Password : string; overload;
+    procedure Password(const AValue : string) ; overload;
+  end;
+
+
+
+type
+  TNewVersioniRTControllerConfigEntity = class(TInterfacedObject, INewVersioniRTControllerConfigEntity)
+  strict private
+    FPath : INewVersioniRTControllerConfigPath;
+    FDataBase : INewVersioniRTControllerConfigDb;
+  private
+    constructor Create;
+  public
+    function Path : INewVersioniRTControllerConfigPath;
+    function Database : INewVersioniRTControllerConfigDb;
+    class function  New : TNewVersioniRTControllerConfigEntity;
+  end;
+
+implementation
+
+uses
+  System.SysUtils;
+
+
+{ TNewVersioniRTControllerConfigPath }
+
+constructor TNewVersioniRTControllerConfigPath.Create;
+begin
+  FJsonDir := EmptyStr;
+  FLogDir := EmptyStr;
+end;
+
+function TNewVersioniRTControllerConfigPath.JsonDir: string;
+begin
+  Result := FJsonDir;
+end;
+
+procedure TNewVersioniRTControllerConfigPath.JsonDir(const AValue: string);
+begin
+  FJsonDir := AValue;
+end;
+
+function TNewVersioniRTControllerConfigPath.LogDir: string;
+begin
+  Result := FLogDir;
+end;
+
+procedure TNewVersioniRTControllerConfigPath.LogDir(const Avalue: string);
+begin
+   FLogDir := AValue;
+end;
+
+{ TNewVersioniRTControllerConfigDB }
+
+constructor TNewVersioniRTControllerConfigDB.Create;
+begin
+  FServer := EmptyStr;
+  FDataBase := EmptyStr;
+  FNomeUtente := EmptyStr;
+  FPassword := EmptyStr;
+end;
+
+function TNewVersioniRTControllerConfigDB.DataBase: string;
+begin
+  Result := FDataBase;
+end;
+
+procedure TNewVersioniRTControllerConfigDB.DataBase(const AValue: string);
+begin
+  FDataBase := AValue;
+end;
+
+procedure TNewVersioniRTControllerConfigDB.NomeUtente(const AValue: string);
+begin
+  FNomeUtente := AValue;
+end;
+
+function TNewVersioniRTControllerConfigDB.NomeUtente: string;
+begin
+  Result := FNomeUtente;
+end;
+
+function TNewVersioniRTControllerConfigDB.Password: string;
+begin
+  Result := FPassword;
+end;
+
+procedure TNewVersioniRTControllerConfigDB.Password(const AValue: string);
+begin
+  FPassword := AValue;
+end;
+
+function TNewVersioniRTControllerConfigDB.Server: string;
+begin
+  Result := FServer;
+end;
+
+procedure TNewVersioniRTControllerConfigDB.Server(const AValue: string);
+begin
+  FServer := AValue;
+end;
+
+{ TNewVersioniRTControllerConfigEntity }
+
+constructor TNewVersioniRTControllerConfigEntity.Create;
+begin
+  FDataBase := TNewVersioniRTControllerConfigDB.create;
+  FPath := TNewVersioniRTControllerConfigPath.create;
+end;
+
+function TNewVersioniRTControllerConfigEntity.Database: INewVersioniRTControllerConfigDb;
+begin
+  Result := FDataBase;
+end;
+
+function TNewVersioniRTControllerConfigEntity.Path: INewVersioniRTControllerConfigPath;
+begin
+  Result := FPath;
+end;
+
+class function TNewVersioniRTControllerConfigEntity.New: TNewVersioniRTControllerConfigEntity;
+begin
+  Result := Self.Create;
+end;
+
+end.

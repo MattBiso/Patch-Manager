@@ -1,0 +1,106 @@
+unit NewVersioniRT.Model.Log;
+
+interface
+uses
+  NewVersioniRT.Model.Interfaces,
+  NewVersioniRT.Controller.Interfaces,
+  System.Generics.Collections,
+  System.Classes,
+  System.SysUtils;
+
+type
+  TNewVersioniRTModelLog = class(TInterfacedObject , INewVersioniRTModelLog)
+  Strict private
+    FLog: INewVersioniRTControllerLogEntity;
+    FLoglist : TStringList;
+    FErrors : TStringList;
+    FConnection : string;
+  public
+    procedure Log(const AValue : INewVersioniRTControllerLogEntity);
+    procedure WriteLog(const AType : string; const AInfo : string);
+    procedure Connection(const AConnection : string);
+    function GetLog : String;
+    function SaveLog : boolean;
+    constructor Create;
+    destructor Destroy; override;
+    class function New: INewVersioniRTModelLog;
+  end;
+
+implementation
+
+uses
+  NewVersioniRT.Controller.Factory,
+  System.IOUtils;
+
+{ TNewVersioniRTModelLog }
+
+procedure TNewVersioniRTModelLog.Connection(const AConnection: string);
+begin
+  FConnection := AConnection;
+end;
+
+constructor TNewVersioniRTModelLog.Create;
+begin
+  FLogList := TStringlist.Create;
+  FLog := TNewVersioniRTControllerFactory.New.EntityLog;
+  FErrors := TStringList.Create;
+end;
+
+destructor TNewVersioniRTModelLog.Destroy;
+begin
+  if Assigned(FLoglist) then
+    FErrors.free;
+  if Assigned(FLoglist) then
+    FLoglist.free;
+  inherited;
+end;
+
+function TNewVersioniRTModelLog.GetLog: String;
+begin
+  Result := FLoglist[FLoglist.Count - 1];
+end;
+
+procedure TNewVersioniRTModelLog.Log(
+  const AValue: INewVersioniRTControllerLogEntity);
+begin
+  FLog := AValue;
+end;
+
+class function TNewVersioniRTModelLog.New: INewVersioniRTModelLog;
+begin
+  Result := Self.Create;
+end;
+
+function TNewVersioniRTModelLog.SaveLog: boolean;
+var
+  Writer : TStreamWriter;
+begin
+  Result := true;
+  Writer := TStreamWriter.Create(FConnection + '\Log.txt', False);
+  try
+    for var I := 0 to FLoglist.count - 1 do
+    begin
+      Writer.WriteLine(FLoglist[I]);
+    end;
+  except
+    on e: Exception do
+    begin
+      Result := false;
+      FErrors.Add(e.Message);
+    end;
+  end;
+  Writer.free;
+end;
+
+procedure TNewVersioniRTModelLog.WriteLog(const AType, AInfo: string);
+begin
+  FLog.Created(DateTimeToStr(now));
+  FLog.LogType(AType);
+  FLog.LogInfo(AInfo);
+  FLoglist.Add('['
+   + FLog.Created +']'+ ' '
+   + FLog.LogType + ': '
+   + FLog.LogInfo);
+end;
+
+end.

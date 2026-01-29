@@ -1,0 +1,45 @@
+package M_NewVersioni;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  M_NewVersioniRT,
+  TMSVCLUIPackPkgDXE15;
+
+contains
+  NewVersioni.View.Patch in 'Source\View\NewVersioni.View.Patch.pas' {Patch},
+  NewVersioni.Frame.BasePage in 'Source\Frame\NewVersioni.Frame.BasePage.pas' {BaseFrame: TFrame},
+  NewVersioni.Frame.PatchPage in 'Source\Frame\NewVersioni.Frame.PatchPage.pas' {PatchPage: TFrame},
+  NewVersioni.Frame.ConfigurationPage in 'Source\Frame\NewVersioni.Frame.ConfigurationPage.pas' {ConfigurationPage: TFrame},
+  NewVersioni.Frame.StatusBar in 'Source\Frame\NewVersioni.Frame.StatusBar.pas' {NewVersioniFrameStatusBar: TFrame},
+  NewVersioni.Form.WizardPage in 'Source\Form\NewVersioni.Form.WizardPage.pas' {WizardPage};
+
+end.

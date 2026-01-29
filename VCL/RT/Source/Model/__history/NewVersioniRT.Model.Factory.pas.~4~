@@ -1,0 +1,24 @@
+unit NewVersioniRT.Model.Factory;
+
+interface
+
+uses
+  NewVersioniRT.Model.Interfaces;
+
+type
+  TNewVersioniRTModelFactory = class(TInterfacedObject, INewVersioniRTModelFactory)
+    function ToJson: INewVersioniRTModelFactory;
+    function New : INewVersioniRTModelFactory;
+  end;
+
+implementation
+
+
+{ TNewVersioniRTModelFactory }
+
+function TNewVersioniRTModelFactory.ToJson: INewVersioniRTModelFactory;
+begin
+
+end;
+
+end.

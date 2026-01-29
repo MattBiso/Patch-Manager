@@ -1,0 +1,32 @@
+unit NewVersioniRT.Model.Factory;
+
+interface
+
+uses
+  NewVersioniRT.Model.Interfaces;
+
+type
+  TNewVersioniRTModelFactory = class(TInterfacedObject, INewVersioniRTModelFactory)
+    function ToJson: INewVersioniRTModelPatch;
+    class function New : INewVersioniRTModelFactory;
+  end;
+
+implementation
+
+uses
+  NewVersioniRT.Model.Patch.ToJson;
+
+
+{ TNewVersioniRTModelFactory }
+
+class function TNewVersioniRTModelFactory.New: INewVersioniRTModelFactory;
+begin
+  Result := Self.Create;
+end;
+
+function TNewVersioniRTModelFactory.ToJson: INewVersioniRTModelPatch;
+begin
+   Result := TNewVersioniRTModelPatchToJson.new;
+end;
+
+end.
