@@ -13,7 +13,7 @@ uses
 
 
 type
-  TFrmNewVersioniMain = class(TForm)
+  TNewVersioniMain = class(TForm)
     SV: TSplitView;
     catMenuItems: TCategoryButtons;
     imlIcons: TImageList;
@@ -34,7 +34,7 @@ type
   end;
 
 
-var FrmNewVersioniMain : TFrmNewVersioniMain;
+var FNewVersioniMain : TNewVersioniMain;
 
 implementation
 
@@ -46,25 +46,25 @@ uses
   NewVersioniRT.Controller.Patch.Entity,
   NewVersioniRT.Controller.Interfaces;
 
-procedure TFrmNewVersioniMain.ActConfigExecute(Sender: TObject);
+procedure TNewVersioniMain.ActConfigExecute(Sender: TObject);
 begin
   ShowPage<TConfigurationPage>;
 end;
 
-procedure TFrmNewVersioniMain.ActPatchExecute(Sender: TObject);
+procedure TNewVersioniMain.ActPatchExecute(Sender: TObject);
 begin
   ShowPage<TPatchPage>;
 end;
 
-procedure TFrmNewVersioniMain.ShowPage<T>;
+procedure TNewVersioniMain.ShowPage<T>;
 begin
-//se non è assegnata una pagina esce
+//se non Ã¨ assegnata una pagina esce
   If not Assigned(Self) then
   begin
     showmessage('ciao');
     Exit;
   end;
-//se è assegnata ed è dello stesso tipo allora esco
+//se Ã¨ assegnata ed Ã¨ dello stesso tipo allora esco
   if Assigned(FCurrentPage) and (FCurrentPage.ClassType = TBaseFrame) then
     Exit;
   var LNewPage := T.Create(Self);
@@ -80,13 +80,13 @@ begin
       Close;
     end;
 
-//Se è assegnata una pagina la elimina e la riassegna alla nuova
+//Se Ã¨ assegnata una pagina la elimina e la riassegna alla nuova
   if Assigned(FCurrentPage) then
     FCurrentPage.Free;
     FCurrentPage := LNewPage;
 end;
 
-procedure TFrmNewVersioniMain.imgMenuClick(Sender: TObject);
+procedure TNewVersioniMain.imgMenuClick(Sender: TObject);
 begin
   if SV.Opened then
     SV.Close
