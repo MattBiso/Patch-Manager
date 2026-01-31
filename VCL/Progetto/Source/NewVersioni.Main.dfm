@@ -1,4 +1,4 @@
-object FrmNewVersioniMain: TFrmNewVersioniMain
+object FNewVersioniMain: TNewVersioniMain
   Left = 0
   Top = 0
   Caption = 'PatchManager'
