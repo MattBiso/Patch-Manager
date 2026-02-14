@@ -113,10 +113,8 @@ class function TPatchManagerRTModelConfig.New: IPatchManagerRTModelConfig;
 begin
   Result := self.Create;
 end;
-//da compleatare il load e il write in modo che scrivano tutti i campi e poi finire il la connessione fire dac in modo che in base al database scelto
-//vada a prendere i campi giusti poi completare oltre al tipo stringa anche tipo id nel wizard come
-//idea per il write config ho pensato di passare come parametri direttamente i valori delle credenziali
-//es . writeconfig(adatabase,aserver,aname,apassword : string); cosi la funzione rimane sempre quella
+
+//es . writeconfig(adatabase,aserver,aname,apassword : string); 
 function TPatchManagerRTModelConfig.WriteConfig: boolean;
 var
   LJsonPath, LJsonDB, LRoot : TJSONObject;
