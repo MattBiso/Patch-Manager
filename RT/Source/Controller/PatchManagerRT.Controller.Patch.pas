@@ -20,7 +20,6 @@ type
     FValidator : IPatchManagerRTControllerValidator;
     FModel : IPatchManagerRTModelPatchToJson;
     FConnection : IPatchManagerRTControllerConnection<string>;
-//    FModificato : boolean;
   public
     function Entity : IPatchManagerRTControllerPatchEntity; overload;
     procedure Entity(const Avalue : IPatchManagerRTControllerPatchEntity); overload;
@@ -32,7 +31,6 @@ type
     function GlobalValidateMessage : boolean; overload;
     function ValidateMessage : boolean; overload;
     function DatabaseAssigned(ADeassign : boolean = true) : boolean;
-//    function load : TList<String>;  per caricare dati da file json;
     constructor Create(const AConnection : TConnectionType;
       const AViewMessage: TFunc<string, TSeverity, boolean>) ;
     class function New(
@@ -76,8 +74,8 @@ begin
   FErrors := TCollections.CreateList<string>;
 end;
 
-//se fvalidator è assegnato e viene passato false allora viene deassegnata fvaliator
-//se invece non viene passato nulla viene verficato solo se è assegnata oppure no
+//se fvalidator Ã¨ assegnato e viene passato false allora viene deassegnata fvaliator
+//se invece non viene passato nulla viene verficato solo se Ã¨ assegnata oppure no
 function TPatchManagerRTControllerPatch.DatabaseAssigned(
   ADeassign: boolean = true): boolean;
 begin
@@ -106,12 +104,6 @@ function TPatchManagerRTControllerPatch.Errors: IList<string>;
 begin
   Result := FErrors;
 end;
-
-//per caricare dati da file json da usare per un possibile caricamento dati
-//function TPatchManagerRTControllerPatch.load: TList<String>;
-//begin
-//  Result := FModel.load
-//end;
 
 //funzione che richiama il validator ogni volta che viene inserita una query
 //e mostra i messaggi che vengono restituiti
@@ -247,7 +239,7 @@ begin
       exit;
     end;
   try
-//verifico se è assegnato gia il database
+//verifico se Ã¨ assegnato gia il database
     if not DatabaseAssigned then
       begin
         FValidator := TPatchManagerRTControllerFactory.New.Validator(FEntity.DbType);
