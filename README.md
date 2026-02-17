@@ -13,15 +13,15 @@ Le Patch conterranno le seguenti informazioni(campi):
 (Data di creazione)
 Db-Type : 
 Potrà essere Aziendale, di configurazione o statistiche avanzate
-### ID (Integer)  
+### ID (Integer) :  
 Conterrà l'id che verrà generato dalla tabella ADT nel momento dell'inserimento del file Json nel database;
-### Descrizione 
+### Descrizione :
 (Descrizione della patch)
-### Command 
+### Command :
 (es. INSERT INTO....);
-### PatchId: 
+### PatchId : 
 Questo sarà un GUID generato dal programma(es. 334-242-113);
-### Struttura del file Json
+### Struttura del file Json :
 Il nome del file si presenta nella seguente forma: 
 DB-yyyymmddhhnnsszzz
 (es. DB-20250514123512003).
